@@ -40,6 +40,7 @@ public class DbConfig {
     private HibernateJpaVendorAdapter vendorAdapter() {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setShowSql(true);
+        vendorAdapter.setGenerateDdl(true);
         return vendorAdapter;
     }
 
@@ -47,15 +48,11 @@ public class DbConfig {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityFactory = new LocalContainerEntityManagerFactoryBean();
-        Properties props = new Properties();
-        props.put("hibernate.jpa.show_sql", env.getProperty("hibernate.jpa.show_sql"));
-        props.put("hibernate.jpa.hbm2ddl.auto", env.getProperty("hibernate.jpa.hbm2ddl.auto"));
 
+        entityFactory.setJpaVendorAdapter(vendorAdapter());
         entityFactory.setDataSource(getDataSource());
-        entityFactory.setJpaProperties(props);
         entityFactory.setPersistenceProviderClass(HibernatePersistenceProvider.class);
         entityFactory.setPackagesToScan("model");
-        entityFactory.setJpaVendorAdapter(vendorAdapter());
 
 
         return entityFactory;

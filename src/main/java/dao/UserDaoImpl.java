@@ -6,16 +6,13 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.List;
 
 @Repository
 public class UserDaoImpl implements UserDao {
 
-    @PersistenceContext
+    @PersistenceContext(type = PersistenceContextType.TRANSACTION)
     private EntityManager entityManager;
 
 
@@ -33,4 +30,30 @@ public class UserDaoImpl implements UserDao {
         return query.getResultList();
     }
 
+    @Transactional
+    @Override
+    public User getUserById(long id) {
+        Query query = entityManager.createQuery("FROM " + User.class.getSimpleName()
+                + " WHERE id = :id");
+        query.setParameter("id", id);
+        return (User) query.getSingleResult();
+    }
+
+    @Transactional
+    @Override
+    public void updateUser(User updatedUser) {
+        User user = getUserById(updatedUser.getId());
+        user.setFirstName(updatedUser.getFirstName());
+        user.setLastName(updatedUser.getLastName());
+        user.setEmail(updatedUser.getEmail());
+        entityManager.merge(user);
+    }
+
+    @Transactional
+    @Override
+    public void deleteUser(long id) {
+        entityManager.createQuery("delete from User where id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
+    }
 }

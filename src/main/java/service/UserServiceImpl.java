@@ -29,4 +29,18 @@ public class UserServiceImpl implements UserServiceInterface {
         return userDao.listUsers();
     }
 
+    @Override
+    public User getUserById(long id) {
+        return userDao.getUserById(id);
+    }
+
+    @Override
+    public void updateUser(User updatedUser) {
+        userDao.updateUser(updatedUser);
+    }
+
+    @Override
+    public void deleteUser(long id) {
+        userDao.deleteUser(id);
+    }
 }
