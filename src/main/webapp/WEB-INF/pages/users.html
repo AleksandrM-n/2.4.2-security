@@ -8,8 +8,15 @@
 <body>
 <div>
     <th:block th:each="us : ${users}">
-        <h1 th:text="${us}"></h1>
+        <h2 th:text="${us.toString()}" ></h2>
+        <a th:href="@{/admin/delete/{id}(id=${us.getId()})}">Delete user</a>     /
+        <a th:href="@{/admin/update/{id}(id=${us.getId()})}">Update user</a>
+        <hr/>
     </th:block>
 </div>
+<br>
+<a th:href="@{http://localhost:8080/admin}">Admin's page</a>
+<br>
+<a th:href="@{http://localhost:8080/logout}">Log Out</a>
 </body>
 </html>
