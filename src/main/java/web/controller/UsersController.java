@@ -36,7 +36,6 @@ public class UsersController {
     }
 
     @GetMapping("/user/{id}")
-    @PreAuthorize("hasAnyAuthority('USER')")
     public String printUserById(@PathVariable ("id") long id, ModelMap model) {
         User user = getUserService().getUserById(id);
         model.addAttribute("user", user.toString());
