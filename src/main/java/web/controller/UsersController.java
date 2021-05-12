@@ -14,7 +14,6 @@ import service.UserServiceInterface;
 import web.config.*;
 
 @Controller
-//@RequestMapping("/")
 public class UsersController {
     static UserServiceInterface getUserService() {
         AnnotationConfigApplicationContext context =

@@ -56,9 +56,7 @@ public class UserDaoImpl implements UserDao {
     @Transactional
     @Override
     public void deleteUser(long id) {
-        entityManager.createQuery("delete from User where id = :id")
-                .setParameter("id", id)
-                .executeUpdate();
+        entityManager.remove(getUserById(id));
     }
 
     // пробный вариант
