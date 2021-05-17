@@ -50,11 +50,9 @@ public class UserDaoImpl implements UserDao {
     @Transactional
     @Override
     public void deleteUser(long id) {
-        User user = getUserById(id);
-        entityManager.remove(user);
+        entityManager.remove(getUserById(id));
     }
 
-    // пробный вариант
     @Transactional
     @Override
     public User getUserByName(String email) {
