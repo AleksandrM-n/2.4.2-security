@@ -44,8 +44,7 @@ public class UsersController {
 
     @GetMapping("/admin/new")
     public String newUser(ModelMap model) {
-        model.addAttribute("user", new User());
-        model.addAttribute("roleSet", getUserService().getRoles());
+        model.addAttribute("user", new User(getUserService().getRoles()));
         return "newForm";
     }
 

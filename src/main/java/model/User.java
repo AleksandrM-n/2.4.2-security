@@ -1,6 +1,8 @@
 package model;
 
 import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -30,11 +32,15 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn (name = "user_id")
+    @OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "user_id")
     private Set<Role> roles = new HashSet<>();
 
     public User() {}
+
+    public User(Set<Role> roles) {
+        this.roles = roles;
+    }
 
     public User(String firstName, String lastName, String email, String password, Set<Role> roles) {
         this.firstName = firstName;

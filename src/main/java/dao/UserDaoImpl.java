@@ -44,19 +44,14 @@ public class UserDaoImpl implements UserDao {
     @Transactional
     @Override
     public void updateUser(User updatedUser) {
-        User user = getUserById(updatedUser.getId());
-        user.setFirstName(updatedUser.getFirstName());
-        user.setLastName(updatedUser.getLastName());
-        user.setEmail(updatedUser.getEmail());
-        user.setPassword(updatedUser.getPassword());
-        user.setRoles(updatedUser.getRoles());
-        entityManager.merge(user);
+        entityManager.merge(updatedUser);
     }
 
     @Transactional
     @Override
     public void deleteUser(long id) {
-        entityManager.remove(getUserById(id));
+        User user = getUserById(id);
+        entityManager.remove(user);
     }
 
     // пробный вариант

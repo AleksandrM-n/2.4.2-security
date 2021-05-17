@@ -1,10 +1,7 @@
 package model;
 
 import org.springframework.security.core.GrantedAuthority;
-
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 public class Role implements GrantedAuthority {
@@ -13,12 +10,27 @@ public class Role implements GrantedAuthority {
     private Long id;
     private String role;
 
+    @ManyToOne()
+    private User user;
+
     public Role(String role) {
         this.role = role;
     }
 
-    public Role() {
+    public Role(String role, User user) {
+        this.role = role;
+        this.user = user;
+    }
 
+    public Role() {
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Long getId() {
@@ -39,6 +51,6 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        return role;
+        return getRole();
     }
 }
